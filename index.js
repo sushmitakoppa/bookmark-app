@@ -1,8 +1,19 @@
 const express=require('express');
 const app=express();
-const Joi=require('joi');
-const books=require('./books')
-const bookmark=require('./bookmark')
+const books=require('./books');
+const bookmark=require('./bookmark');
+const mongoose=require('mongoose');
+
+/* connection to database */
+mongoose.connect('mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
+.then(()=>{
+    console.log('connected to db')
+})
+.catch((err)=>{
+    console.log('Error',err.name)
+})
+
+
 // const Joi=require('@hapi/joi');        
 // const helmet=require('helmet')
 
@@ -20,7 +31,7 @@ const bookmark=require('./bookmark')
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use('/users/book', books)
+app.use('/users/books', books)
 app.use('/users/bookmarks',bookmark)
 
 
