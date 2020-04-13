@@ -31,8 +31,9 @@ function validateBookmark(bookmark){
 }
 /* CRUD operation */
 
+/*GET */
 
-router.get('/get/:url', (req,res)=>{
+router.get('/:url', (req,res)=>{
    
     const bookmark_get=bookmarks_list.find(index=>index.url===req.params.url)
     if (!bookmark_get){
@@ -43,12 +44,14 @@ router.get('/get/:url', (req,res)=>{
     }
 })
 
-router.post('/post', (req,res)=>{
+
+/* POST */
+
+router.post('/', (req,res)=>{
 
     const result=validateBookmark(req.body)
     if (result.error){
-        return res.status(400).send(result.error.details[0].message);
-        
+        return res.status(400).send(result.error.details[0].message); 
     }
     // console.log(result)
     // const schema=Joi.object({
@@ -68,42 +71,46 @@ router.post('/post', (req,res)=>{
 
 /* find is only working for strings not for numbers */
 
+/* PUT */
 
 
-
-router.put('/put/:url',(req,res)=>{
+router.put('/:url',(req,res)=>{
+    const bookmark_put=bookmarks_list.find(index=>index.url===req.params.url)
+    if(!bookmark_put){
+        return res.status(400).send(`No such title exists ${req.params.url}`)
+  }
+    
+  const result=validateBookmark(req.body)
+  if (!result.error){
     var updated_bookmarks={
         url:req.body.url,
         desc:req.body.desc,
         tags:req.body.tags
     };
-    const bookmark_put=bookmarks_list.find(index=>index.url===req.params.url)
-    if(!bookmark_put){
-        return res.status(400).send(`no such title exists`)
-  }
-  const result=validateBookmark(req.body,schema)
-  if (!result.error){
       bookmark_put.url=updated_bookmarks.url;
       bookmark_put.desc=updated_bookmarks.desc;
       bookmark_put.tags=updated_bookmarks.tags;
 
-      return res.send(`bookmark updated ${bookmarks_list}`)
+      return res.send(`bookmark updated `)
     }
     else{
-        return res.status(400).send("Error", result.error.details[0].message)
+        return res.status(400).send( result.error.details[0].message)
     }
 });
 
-router.delete('/delete/:url',(req,res)=>{
+
+/*DELETE */
+
+router.delete('/:url',(req,res)=>{
     const bookmark_delete=bookmarks_list.find(index=>index.url===req.params.url)
       
     if(!bookmark_delete){
         return res.status(400).send(`No such URL exists`)
   }
   const index=bookmarks_list.indexOf(bookmark_delete);
-  courses.splice(index,1);
+  bookmarks_list.splice(index,1);
 
-    res.send(bookmark_lists)
+    res.send(bookmarks_list)
 })
 
 
