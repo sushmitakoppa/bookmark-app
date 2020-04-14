@@ -5,13 +5,13 @@ const Joi=require('joi');
 const mongoose=require('mongoose');
 
 /* connection to database */
-mongoose.connect('mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
-.then(()=>{
-    console.log('connected to db')
-})
-.catch((err)=>{
-    console.log('Error',err.name)
-})
+// mongoose.connect('mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
+// .then(()=>{
+//     console.log('connected to db')
+// })
+// .catch((err)=>{
+//     console.log('Error',err.name)
+// })
 
 /* without mongo db************* */
 
