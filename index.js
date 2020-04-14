@@ -30,6 +30,7 @@ const mongoose=require('mongoose');
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(express.static('front-end'))
 app.use('/users/books', books)
 app.use('/users/bookmarks',bookmark)
 

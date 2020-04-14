@@ -5,13 +5,13 @@ const Joi=require('joi');
 const mongoose=require('mongoose');
 
 /* connection to database */
-// mongoose.connect('mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
-// .then(()=>{
-//     console.log('connected to db')
-// })
-// .catch((err)=>{
-//     console.log('Error',err.name)
-// })
+mongoose.connect('mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
+.then(()=>{
+    console.log('connected to db')
+})
+.catch((err)=>{
+    console.log('Error',err.name)
+})
 
 /* without mongo db************* */
 
@@ -29,12 +29,59 @@ function validateBookmark(bookmark){
     }
     return Joi.validate(bookmark, schema)
 }
+
+
+/*  RENDERING FRONT END */
+
+// router.get('/:name', (req,res)=>{
+//     root=path.join(__dirname,'public')
+//     var filename=req.params.name
+//     res.sendFile(filename,root,err=>{
+//         if(err){
+//             console.log('error')
+//         }
+//         else{
+//             console.log('sent',filename)
+//         }
+//     });
+// });
+
+
+// router.get('/',(req,res)=>{
+//     res.send(path.join(__dirname+ '/front-end/index.html'))
+// })
+
+router.get("/", (req, res) => {
+    res.sendFile(__dirname + "/front-end/index.html");
+   });
+
+// router.get('/user/:uid/photos/:file', function (req, res) {
+//     var uid = req.params.uid
+//     var file = req.params.file
+  
+//     req.user.mayViewFilesFrom(uid, function (yes) {
+//       if (yes) {
+//         res.sendFile('/uploads/' + uid + '/' + file)
+//       } else {
+//         res.status(403).send("Sorry! You can't see that.")
+//       }
+//     })
+//   })
+
+// router.get('/',(req,res)=>{
+//     res.send(bookmarks_list)
+// })
+
+
 /* CRUD operation */
+
+
 
 /*GET */
 
+
 router.get('/:url', (req,res)=>{
-   
+
     const bookmark_get=bookmarks_list.find(index=>index.url===req.params.url)
     if (!bookmark_get){
         res.status(400).send(`There is no such url ${req.params.url}`)
@@ -45,9 +92,11 @@ router.get('/:url', (req,res)=>{
 })
 
 
-/* POST */
+// /* POST */
 
 router.post('/', (req,res)=>{
+
+
 
     const result=validateBookmark(req.body)
     if (result.error){
@@ -65,13 +114,17 @@ router.post('/', (req,res)=>{
         desc:req.body.desc,
         tags:req.body.tags
     }
-    bookmarks_list.push(bm)
-    res.send(bookmarks_list)
+    const repeated_bm=bookmarks_list.find(index=>index.url===bm.url)
+    if(!repeated_bm){
+        bookmarks_list.push(bm)
+        return res.send(bookmarks_list)
+    }
+    return res.send('This URL is already present')
 });
 
-/* find is only working for strings not for numbers */
+// /* find is only working for strings not for numbers */
 
-/* PUT */
+// /* PUT */
 
 
 router.put('/:url',(req,res)=>{
@@ -99,7 +152,7 @@ router.put('/:url',(req,res)=>{
 });
 
 
-/*DELETE */
+// /*DELETE */
 
 router.delete('/:url',(req,res)=>{
     const bookmark_delete=bookmarks_list.find(index=>index.url===req.params.url)
