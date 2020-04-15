@@ -28,13 +28,19 @@ const mongoose=require('mongoose');
 // })
 
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(express.static('front-end'))
-app.use('/users/books', books)
-app.use('/users/bookmarks',bookmark)
+
+
+/* Set the template engine */
+app.set('view engine', 'ejs');
+
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(express.static('/front-end'));
+app.use('/users/books', books);
+app.use('/users/bookmarks',bookmark);
 
 
 const port=process.env.port||5000;
 
-app.listen(port, ()=>console.log(`listening ${port}`))
+app.listen(port, ()=>console.log(`listening ${port}`));
