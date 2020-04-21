@@ -128,7 +128,7 @@ router.get("/", (req, res) => {
 //     var updated_bookmarks={
 //         url:req.body.url,
 //         desc:req.body.desc,
-//         tags:JSON.parse(req.body.tags) 
+//         tags:req.body.tags
 //     };
 //       bookmark_put.url=updated_bookmarks.url;
 //       bookmark_put.desc=updated_bookmarks.desc;
@@ -177,12 +177,12 @@ router.post('/',(req,res)=>{
         const list_of_bookmark=new bookmark_schema({
             url:req.body.url,
             desc:req.body.desc,
-            tags:req.body.tags
+            tags:JSON.parse(req.body.tags) 
         })
 
            const result= await list_of_bookmark.save();
            res.send(list_of_bookmark)
-        //  console.log(result)        
+         console.log(result)        
     }
     createBookmark()
     
