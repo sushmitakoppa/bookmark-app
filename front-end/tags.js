@@ -85,3 +85,15 @@ document.addEventListener('click', (e) => {
     addTags();    
   }
 })
+
+
+
+function addTagsToInPut(){
+  document.getElementById('inputTag').value=JSON.stringify(tags);
+ 
+}
+
+
+
+document.querySelector('.btn').addEventListener('click',addTagsToInPut);
+
