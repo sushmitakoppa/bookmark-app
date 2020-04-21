@@ -1,8 +1,11 @@
+//import { json } from "express";
+
 const tagContainer = document.querySelector('.tag_container');
 
 const input= document.querySelector('.tag_container input');
 
 let tags=[];
+
 
 function createTags(lable) {
 
@@ -85,3 +88,13 @@ document.addEventListener('click', (e) => {
     addTags();    
   }
 })
+
+function addTagsToInPut(){
+  document.getElementById('inputTag').value=JSON.stringify(tags);
+ 
+}
+
+
+
+document.querySelector('.btn').addEventListener('click',addTagsToInPut);
+
