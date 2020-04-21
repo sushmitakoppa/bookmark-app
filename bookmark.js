@@ -128,7 +128,7 @@ router.get("/", (req, res) => {
 //     var updated_bookmarks={
 //         url:req.body.url,
 //         desc:req.body.desc,
-//         tags:req.body.tags
+//         tags:JSON.parse(req.body.tags) 
 //     };
 //       bookmark_put.url=updated_bookmarks.url;
 //       bookmark_put.desc=updated_bookmarks.desc;
