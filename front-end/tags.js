@@ -1,10 +1,9 @@
-//import { json } from "express";
 
 const tagContainer = document.querySelector('.tag_container');
 
 const input= document.querySelector('.tag_container input');
 
-let tags=[];
+let tags =[];
 
 
 function createTags(lable) {
@@ -89,12 +88,36 @@ document.addEventListener('click', (e) => {
   }
 })
 
-function addTagsToInPut(){
-  document.getElementById('inputTag').value=JSON.stringify(tags);
- 
+
+
+// this below function uses ajax and send data to backend 
+
+function sendData(e) {
+  e.preventDefault()
+  u = document.getElementById('url').value;
+  d = document.getElementById('desc').value;
+  document.getElementById('inputTag').value=tags;
+  t = document.getElementById('inputTag').value.split(',');
+  document.getElementById('inputTag').value="";
+  console.log(u)
+  let valueToSend = {
+    url: u,
+    desc: d,
+    tags: t
+  }
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:5000/users/bookmarks',
+    dataType: 'json',
+    data: valueToSend,
+    success: function (data) {
+      alert(data);
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
 }
 
 
-
-document.querySelector('.btn').addEventListener('click',addTagsToInPut);
-
+document.querySelector('.btn').addEventListener('click', sendData);
