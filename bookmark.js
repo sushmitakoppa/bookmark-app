@@ -177,7 +177,7 @@ router.post('/',(req,res)=>{
         const list_of_bookmark=new bookmark_schema({
             url:req.body.url,
             desc:req.body.desc,
-            tags:JSON.parse(req.body.tags) 
+            tags:req.body.tags
         })
 
            const result= await list_of_bookmark.save();
