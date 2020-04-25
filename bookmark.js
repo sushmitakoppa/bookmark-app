@@ -58,6 +58,20 @@ router.get("/", (req, res) => {
    });
 
 
+//get all the data of backend
+
+router.get('/list',(req,res)=>{
+
+    async function getBookmark(){
+
+        const list = await List_of_bookmark.find();
+        res.send(list);
+        console.log(list);
+    }
+    getBookmark()
+})
+
+
 // // router.get('/',(req,res)=>{
 // //     res.send(bookmarks_list)
 // // })
