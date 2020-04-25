@@ -1,6 +1,7 @@
 .tag_container{
     width: 100%;
     
+    
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -10,7 +11,7 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    padding: 0rem;
+    padding: 0.2rem;
     display: flex;
     flex-wrap: wrap;
 }
@@ -19,8 +20,12 @@
     border: 1px solid #ced4da;
     border-radius: 1rem;
     display: flex;
-    margin: .3rem;
-    padding: .15rem;
+    align-items: center;
+    margin: .1rem;
+    padding: .05rem;
+}
+.material-icons{
+    cursor:pointer;
 }
 .tag span{
     display: flex;
