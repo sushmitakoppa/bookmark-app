@@ -1,4 +1,3 @@
-
 const tagContainer = document.querySelector('.tag_container');
 
 const input= document.querySelector('.tag_container input');
@@ -18,10 +17,10 @@ function createTags(lable) {
 
     //create i
     const closebtn=document.createElement("i");
-    closebtn.setAttribute("class", "material-icons");
+    closebtn.setAttribute("class", "material-icons md-18");
     closebtn.setAttribute("id",lable);
     closebtn.setAttribute("data-item",lable);
-    closebtn.innerHTML=`<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">        <path fill="#000000" d="M15.854 12.854c-0-0-0-0-0-0l-4.854-4.854 4.854-4.854c0-0 0-0 0-0 0.052-0.052 0.090-0.113 0.114-0.178 0.066-0.178 0.028-0.386-0.114-0.529l-2.293-2.293c-0.143-0.143-0.351-0.181-0.529-0.114-0.065 0.024-0.126 0.062-0.178 0.114 0 0-0 0-0 0l-4.854 4.854-4.854-4.854c-0-0-0-0-0-0-0.052-0.052-0.113-0.090-0.178-0.114-0.178-0.066-0.386-0.029-0.529 0.114l-2.293 2.293c-0.143 0.143-0.181 0.351-0.114 0.529 0.024 0.065 0.062 0.126 0.114 0.178 0 0 0 0 0 0l4.854 4.854-4.854 4.854c-0 0-0 0-0 0-0.052 0.052-0.090 0.113-0.114 0.178-0.066 0.178-0.029 0.386 0.114 0.529l2.293 2.293c0.143 0.143 0.351 0.181 0.529 0.114 0.065-0.024 0.126-0.062 0.178-0.114 0-0 0-0 0-0l4.854-4.854 4.854 4.854c0 0 0 0 0 0 0.052 0.052 0.113 0.090 0.178 0.114 0.178 0.066 0.386 0.029 0.529-0.114l2.293-2.293c0.143-0.143 0.181-0.351 0.114-0.529-0.024-0.065-0.062-0.126-0.114-0.178z"></path></svg>`;
+    closebtn.innerHTML=`clear`;
     console.log(closebtn);
 
     div.appendChild(span);
@@ -70,15 +69,7 @@ input.addEventListener('keyup', (e) => {
 
 //delete
 document.addEventListener('click', (e) => {
-  console.log(e.target.tagName);
-  console.log(e.target);
-  if(e.target.tagName === 'svg'){
-    e.target=console.log(e.target.parentElement);
-  }
-  if(e.target.tagName=== 'path'){
-    e.target=console.log(e.target.parentElement.parentElement);
-  }
-  
+
   if(e.target.tagName === 'I') {
     const tagLabel = e.target.getAttribute('data-item');
     //console.log(tagLabel);
@@ -89,6 +80,7 @@ document.addEventListener('click', (e) => {
 })
 
 
+                        //////////////////POST///////////// 
 
 // this below function uses ajax and send data to backend 
 
@@ -120,4 +112,83 @@ function sendData(e) {
 }
 
 
-document.querySelector('.btn').addEventListener('click', sendData);
+document.querySelector('#btn').addEventListener('click', sendData);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+                         //////////////////GET///////////// 
+
+function getData(){
+  // e.preventDefault();
+
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost:5000/users/bookmarks/list',
+    dataType: 'json',
+    success: function (data) {
+      // alert(data);
+      // console.log(data);
+      list(data);
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+
+}
+function list(data){
+  
+  let lists = data;
+  console.log('list from ajax:',lists);
+  console.log(lists.length);
+  let resultTags = lists.map(t => t.tags);
+  let resultUrl = lists.map(u => u.url);
+  let resultDesc = lists.map(d => d.desc);
+  console.log(resultTags);
+  console.log(resultUrl);
+  console.log(resultDesc);
+  //Showtable();
+  // console.log("lists[0]",lists[0]);
+  // console.log("lists[1]",lists[1]);
+  // console.log("lists[2]",lists[2]);
+
+  let table=`
+  <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>  url  </th>
+            <th>  description  </th>
+            <th>  tags  </th>
+        </tr>
+    </thead>
+    <tbody id ="tbody">             
+    </tbody>
+
+  </table>`;
+  let tr=[];
+  for(let i = 0 ; i <= lists.length ; i++){
+    tr[i] =`<tr>  <td>${resultUrl[i]}</td>
+                  <td>${resultDesc[i]}</td> 
+                  <td>${resultTags[i]}</td>
+            </tr>`;
+  }
+
+  
+  document.querySelector('#table').insertAdjacentHTML('afterbegin',table);
+  document.querySelector("#tbody").innerHTML = tr.join("");
+}
+
+
+document.querySelector('#dataShow').addEventListener('click', getData);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+                         /////////////////////PUT////////// 
+
+
+                         /////////////////////DELETE////////// 
