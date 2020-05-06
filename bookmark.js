@@ -7,7 +7,7 @@ const mongoose=require('mongoose');
 const bookmark_schema=require('./schemas/bookmarks/bookmark_schema')
 
 /* connection to database */
-mongoose.connect('mongodb+srv://sushmita:Koppa%4054321@cluster0-q5v1k.mongodb.net/test'||'mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://sushmita:Koppa%4054321@cluster0-q5v1k.mongodb.net/test?retryWrites=true&w=majority'||'mongodb://localhost:27017/loonity',{useNewUrlParser: true, useUnifiedTopology: true })
 .then(()=>{
     console.log('connected to db')
 })
